@@ -6,6 +6,7 @@ Welcome! This repository is created as part of my journey in learning **Java pro
 - ✅ Classes and Objects  
 - ✅ Methods and Constructors  
 - ✅ Inheritance and Encapsulation  
+- ✅ Composition and Polymorphism  
 - ✅ Java Basics for academic use
 
 ---
@@ -14,6 +15,7 @@ Welcome! This repository is created as part of my journey in learning **Java pro
 
 - To help review and practice content covered in Java programming courses
 - To organize code examples by topic for easy reference
-- To serve as a resource for assignments, practice, and exam preparation
+- To understand how to design and structure Java programs using OOP principles
+- To practice using **Composition** (has-a relationship) and **Polymorphism** (many forms of behavior)
 
 
