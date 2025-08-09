@@ -1,26 +1,47 @@
 public class TestInvoice {
     public static void main(String[] args) {
-        // Test Customer class
-        Customer c1 = new Customer(88, "Narathip Changjai", 10);
-        System.out.println(c1); // Customer's toString()
-        c1.setDiscount(8);
-        System.out.println(c1);
-        System.out.println("id is: " + c1.getId());
-        System.out.println("name is: " + c1.getName());
-        System.out.println("discount is: " + c1.getDiscount());
+        // 1. Create different discount policy objects
+        DiscountPolicy noDiscount = new NoDiscountPolicy();
+        DiscountPolicy percentDiscount = new PercentageDiscountPolicy(15);
+        DiscountPolicy vipDiscount = new VIPBonusDiscountPolicy(10, 5, 2000.0);
+        // 2. Create customer objects with different discount policies
+        Customer customer1 = new Customer(101, "Alice", noDiscount);
+        Customer customer2 = new Customer(102, "Bob", percentDiscount);
+        Customer customer3 = new Customer(103, "Charlie", vipDiscount);
+        System.out.println("--- Customer Information ---");
+        System.out.println(customer1);
+        System.out.println(customer2);
+        System.out.println(customer3);
+        System.out.println();
+        // 3. Create invoice objects for each customer
+        System.out.println("--- Invoices Before Discounts ---");
+        Invoice invoice1 = new Invoice(1, customer1, 500.0);
+        Invoice invoice2 = new Invoice(2, customer2, 500.0);
+        Invoice invoice3 = new Invoice(3, customer3, 1500.0); // Below VIP threshold
+        Invoice invoice4 = new Invoice(4, customer3, 2500.0); // Above VIP threshold
+        System.out.println("Invoice 1 (Alice): Original Amount = " + String.format("%.2f", invoice1.getAmount()));
+        System.out.println("Invoice 2 (Bob): Original Amount = " + String.format("%.2f", invoice2.getAmount()));
+        System.out.println("Invoice 3 (Charlie): Original Amount = " + String.format("%.2f", invoice3.getAmount()));
+        System.out.println("Invoice 4 (Charlie): Original Amount = " + String.format("%.2f", invoice4.getAmount()));
+        System.out.println();
 
-        
-        // Test Invoice class
-        Invoice inv1 = new Invoice(101, c1, 888.8);
-        System.out.println(inv1);
-        inv1.setAmount(999.9);
-        System.out.println(inv1);
-        System.out.println("id is: " + inv1.getId());
-        System.out.println("customer is: " + inv1.getCustomer()); // Customer's toString()
-        System.out.println("amount is: " + inv1.getAmount());
-        System.out.println("customer's id is: " + inv1.getCustomerId());
-        System.out.println("customer's name is: " + inv1.getCustomerName());
-        System.out.println("customer's discount is: " + inv1.getCustomerDiscount());
-        System.out.printf("amount after discount is: %.2f%n", inv1.getAmountAfterDiscount());
+        // 4. Demonstrate polymorphism by calculating and printing final amounts
+        System.out.println("--- Final Invoice Amounts (After Discount) ---");
+        System.out.println("Invoice 1 (Alice): " + String.format("%.2f", invoice1.getAmountAfterDiscount()));
+        // Expected: 500.00
+        System.out.println("Invoice 2 (Bob): " + String.format("%.2f", invoice2.getAmountAfterDiscount()));
+        // Expected: 500 * (1 - 0.15) = 425.00
+        System.out.println("Invoice 3 (Charlie): " + String.format("%.2f", invoice3.getAmountAfterDiscount()));
+        // Expected: 1500 * (1 - 0.10) = 1350.00 (below threshold)
+        System.out.println("Invoice 4 (Charlie): " + String.format("%.2f", invoice4.getAmountAfterDiscount()));
+        // Expected: 2500 * (1 - 0.15) = 2125.00 (above threshold)
+        System.out.println();
+        // 5. Demonstrate the toString() method of the Invoice class
+        System.out.println("--- Full Invoice Details ---");
+        System.out.println(invoice1);
+        System.out.println(invoice2);
+        System.out.println(invoice3);
+        System.out.println(invoice4);
     }
+
 }

@@ -1,18 +1,19 @@
 /* 
- * Composition Concept
- * Relationship 'has-a' (มี class Customer)
+ * 6. Invoice Class
+ * This class represents an invoice, linking a customer to a total amount.
+ * Relataionship 'has-a' (มี Class Customer)
  */
 public class Invoice {
     private int id;
     private Customer customer; // Composition Concept
     private double amount;
 
-    public Invoice(int id, Customer customer, double amount){
+    public Invoice(int id, Customer customer, double amount) {
         if (id < 0)
             throw new IllegalArgumentException("Customer ID must be non-negative.");
         if (customer == null)
             throw new IllegalArgumentException("Customer connot be null.");
-        if (amount < 0) 
+        if (amount < 0)
             throw new IllegalArgumentException("Amount must be non-negative");
 
         this.id = id;
@@ -42,25 +43,31 @@ public class Invoice {
         return amount;
     }
 
-    public int getCustomerId(){
+    public int getCustomerId() {
         return customer.getId();
     }
 
-    public String getCustomerName(){
+    public String getCustomerName() {
         return customer.getName();
     }
 
-    public int getCustomerDiscount(){
-        return customer.getDiscount();
-    }
+    // This method as per UML diagram
+    // public int getCustomerDiscount(){
+    // return customer.getDiscountPolicy();
+    // }
 
-    public double getAmountAfterDiscount(){
-        return this.amount * (1-getCustomerDiscount()/100.0);
+    // Core business logic: apply the customer's discount policy
+    public double getAmountAfterDiscount() {
+        return this.customer.getDiscountPolicy().applyDiscount(this.amount);
     }
 
     @Override
     public String toString() {
-        return String.format("Invoice[id=%d, customer=%s, amount=%.2f]", this.id,customer,this.amount);
+        return "Invoice{id= " + id + 
+                ", customerId= " + getCustomerId() + 
+                ", customerName= " + getCustomerName() +
+                ", orginalAmount= " + String.format("%.2f", amount) + 
+                ", dicountAmount= "+ String.format("%.2f", getAmountAfterDiscount()) + "}";
     }
 
 }

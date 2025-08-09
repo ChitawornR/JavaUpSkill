@@ -1,7 +1,12 @@
+/* 
+ * 5. Customer Class
+ * It has a "has-a" relationship with DiscountPolicy
+ * This class represent a customer with an ID, name, and a DiscountPolicy.
+ */
 public class Customer {
     private int id;
     private String name;
-    private int discount;
+    private DiscountPolicy discountPolicy;
 
     /*
      * Constructor for create Customer object
@@ -14,17 +19,17 @@ public class Customer {
      * throws IllegalArgumentException หาก @param ไม่ถูกต้อง
      */
 
-    public Customer(int id, String name, int discount) {
+    public Customer(int id, String name, DiscountPolicy discountPolicy) {
         if (id < 0)
             throw new IllegalArgumentException("Customer ID must be non-negative.");
         if (name == null || name.isBlank())
             throw new IllegalArgumentException("Customer Name must not be null or blank.");
-        if (discount < 0 || discount > 100)
-            throw new IllegalArgumentException("Discount percentage must be between 0 and 100.");
+        if (discountPolicy==null)
+            throw new IllegalArgumentException("Customer must have a discount policy");
 
         this.id = id;
         this.name = name;
-        this.discount = discount;
+        this.discountPolicy = discountPolicy;
     }
 
     public int getId() {
@@ -35,20 +40,20 @@ public class Customer {
         return name;
     }
 
-    public int getDiscount() {
-        return discount;
+    public DiscountPolicy getDiscountPolicy() {
+        return discountPolicy;
     }
 
-    public void setDiscount(int discount) {
-        if (discount < 0 || discount > 100)
+    public void setDiscount(DiscountPolicy discountPolicy) {
+        if (discountPolicy == null)
             throw new IllegalArgumentException("Discount percentage must be between 0 and 100.");
-        this.discount = discount;
+        this.discountPolicy = discountPolicy;
     }
 
     @Override
     public String toString() {
-        return String.format("%s(%d)(%d%%)", name,id,discount);
+        return "Customer{id= " + id + ", name= "+name + ", discountPolcy="+discountPolicy+"}";
     }
 
-    
+
 }
